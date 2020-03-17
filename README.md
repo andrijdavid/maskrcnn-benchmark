@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Faster R-CNN and Mask R-CNN in PyTorch 1.0
 
 **maskrcnn-benchmark has been deprecated. Please see [detectron2](https://github.com/facebookresearch/detectron2), which includes implementations for all models in maskrcnn-benchmark**
@@ -37,9 +36,9 @@ python webcam.py --config-file ../configs/caffe2/e2e_keypoint_rcnn_R_50_FPN_1x_c
 ```
 
 A notebook with the demo can be found in [demo/Mask_R-CNN_demo.ipynb](demo/Mask_R-CNN_demo.ipynb).
-=======
+
 # RetinaMask
->>>>>>> retinamask/master
+
 
 The code is based on the [maskrcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark).
 
@@ -76,8 +75,6 @@ Follow the [maskrcnn-benchmark](./OLD_README.md) to install code and set up the 
 
 P.S. evaluation metric: AP, AP50, AP75, AP(small), AP(medium), AP(large), please refer to [COCO](http://cocodataset.org/#detection-eval) for detailed explanation. The inference time is measured on Nvidia 1080Ti.
 
-
-<<<<<<< HEAD
 ```bash
 # symlink the coco dataset
 cd ~/github/maskrcnn-benchmark
@@ -94,15 +91,16 @@ ln -s /path_to_coco_dataset/val2017 datasets/coco/val2017
 
 # for pascal voc dataset:
 ln -s /path_to_VOCdevkit_dir datasets/voc
-=======
+```
+
 #### Run Inference
 Use the following scripts. (Assume models are download to the ./models directory)
 Run Mask and BBox
->>>>>>> retinamask/master
-```
-python tools/test_net.py --config-file ./configs/retina/retinanet_mask_R-50-FPN_2x_adjust_std011_ms.yaml MODEL.WEIGHT ./models/retinanet_mask_R-50-FPN_2x_adjust_std011_ms_model.pth
 
-<<<<<<< HEAD
+```bash
+python tools/test_net.py --config-file ./configs/retina/retinanet_mask_R-50-FPN_2x_adjust_std011_ms.yaml MODEL.WEIGHT ./models/retinanet_mask_R-50-FPN_2x_adjust_std011_ms_model.pth
+```
+
 P.S. `COCO_2017_train` = `COCO_2014_train` + `valminusminival` , `COCO_2017_val` = `minival`
       
 
@@ -138,14 +136,13 @@ you'll also need to change the learning rate, the number of iterations and the l
 Here is an example for Mask R-CNN R-50 FPN with the 1x schedule:
 ```bash
 python tools/train_net.py --config-file "configs/e2e_mask_rcnn_R_50_FPN_1x.yaml" SOLVER.IMS_PER_BATCH 2 SOLVER.BASE_LR 0.0025 SOLVER.MAX_ITER 720000 SOLVER.STEPS "(480000, 640000)" TEST.IMS_PER_BATCH 1 MODEL.RPN.FPN_POST_NMS_TOP_N_TRAIN 2000
-=======
 ```
 Run BBox only
->>>>>>> retinamask/master
-```
-python tools/test_net.py --config-file ./configs/retina/retinanet_mask_R-50-FPN_2x_adjust_std011_ms.yaml MODEL.WEIGHT ./models/retinanet_mask_R-50-FPN_2x_adjust_std011_ms_model.pth MODEL.MASK_ON False
 
-<<<<<<< HEAD
+```bash
+python tools/test_net.py --config-file ./configs/retina/retinanet_mask_R-50-FPN_2x_adjust_std011_ms.yaml MODEL.WEIGHT ./models/retinanet_mask_R-50-FPN_2x_adjust_std011_ms_model.pth MODEL.MASK_ON False
+```
+
 We also changed the batch size during testing, but that is generally not necessary because testing
 requires much less memory than training.
 
@@ -286,6 +283,3 @@ note = {Accessed: [Insert date here]}
 ## License
 
 maskrcnn-benchmark is released under the MIT license. See [LICENSE](LICENSE) for additional details.
-=======
-```
->>>>>>> retinamask/master
