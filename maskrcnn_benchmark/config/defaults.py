@@ -19,7 +19,7 @@ from yacs.config import CfgNode as CN
 # -----------------------------------------------------------------------------
 
 _C = CN()
-
+_C.DEBUG = False
 _C.MODEL = CN()
 _C.MODEL.RPN_ONLY = False
 _C.MODEL.MASK_ON = False
@@ -28,7 +28,7 @@ _C.MODEL.KEYPOINT_ON = False
 _C.MODEL.DEVICE = "cuda"
 _C.MODEL.META_ARCHITECTURE = "GeneralizedRCNN"
 _C.MODEL.CLS_AGNOSTIC_BBOX_REG = False
-
+_C.MODEL.SPARSE_MASK_ON = False
 # If the WEIGHT starts with a catalog://, like :R-50, the code will look for
 # the path in paths_catalog. Else, it will use it as the specified absolute
 # path
@@ -254,7 +254,7 @@ _C.MODEL.ROI_KEYPOINT_HEAD.CONV_LAYERS = tuple(512 for _ in range(8))
 _C.MODEL.ROI_KEYPOINT_HEAD.RESOLUTION = 14
 _C.MODEL.ROI_KEYPOINT_HEAD.NUM_CLASSES = 17
 _C.MODEL.ROI_KEYPOINT_HEAD.SHARE_BOX_FEATURE_EXTRACTOR = True
-
+_C.MODEL.ROI_MASK_HEAD.CANONICAL_LEVEL = 4
 # ---------------------------------------------------------------------------- #
 # ResNe[X]t options (ResNets = {ResNet, ResNeXt}
 # Note that parts of a resnet may be used for both the backbone and the head
@@ -292,6 +292,7 @@ _C.MODEL.RESNETS.DEFORMABLE_GROUPS = 1
 # ---------------------------------------------------------------------------- #
 # RetinaNet Options (Follow the Detectron version)
 # ---------------------------------------------------------------------------- #
+<<<<<<< HEAD
 _C.MODEL.RETINANET = CN()
 
 # This is the number of foreground classes and background.
@@ -315,7 +316,7 @@ _C.MODEL.RETINANET.USE_C5 = True
 _C.MODEL.RETINANET.NUM_CONVS = 4
 
 # Weight for bbox_regression loss
-_C.MODEL.RETINANET.BBOX_REG_WEIGHT = 4.0
+_C.MODEL.RETINANET.BBOX_REG_WEIGHT = 1.0
 
 # Smooth L1 loss beta for bbox regression
 _C.MODEL.RETINANET.BBOX_REG_BETA = 0.11
@@ -386,6 +387,47 @@ _C.MODEL.FBNET.MASK_HEAD_STRIDE = 0
 _C.MODEL.FBNET.RPN_HEAD_BLOCKS = 0
 _C.MODEL.FBNET.RPN_BN_TYPE = ""
 
+# RetinaNet is used (instead of Fast/er/Mask R-CNN/R-FCN/RPN) if True
+_C.RETINANET.RETINANET_ON = False
+
+# Use Self-Adjust Smooth L1 Loss
+_C.RETINANET.SELFADJUST_SMOOTH_L1 = False
+
+# IoU overlap ratio for labeling an anchor as positive
+# Anchors with >= iou overlap are labeled positive
+_C.RETINANET.POSITIVE_OVERLAP = 0.5
+
+# IoU overlap ratio for labeling an anchor as negative
+# Anchors with < iou overlap are labeled negative
+_C.RETINANET.NEGATIVE_OVERLAP = 0.4
+
+# Whether classification and bbox branch tower should be shared or not
+_C.RETINANET.SHARE_CLS_BBOX_TOWER = False
+
+# Use class specific bounding box regression instead of the default class
+# agnostic regression
+_C.RETINANET.CLASS_SPECIFIC_BBOX = False
+
+# Whether softmax should be used in classification branch training
+_C.RETINANET.SOFTMAX = False
+
+# "p2p7": Use feature p3p7 for object detection and p2-p5 for mask prediction.
+_C.RETINANET.BACKBONE = "p3p7"
+
+_C.RETINANET.NUM_MASKS_TEST = 50
+
+_C.RETINANET.LOW_QUALITY_MATCHES = True
+_C.RETINANET.LOW_QUALITY_THRESHOLD = 0.0
+
+# ---------------------------------------------------------------------------- #
+# SparseMask Options (Follow the Detectron version)
+# ---------------------------------------------------------------------------- #
+_C.MODEL.SPARSE_MASK_HEAD = CN()
+_C.MODEL.SPARSE_MASK_HEAD.PREDICTOR = ""
+_C.MODEL.SPARSE_MASK_HEAD.FEATURE_EXTRACTOR = "SparseMaskFPNFeatureExtractor"
+_C.MODEL.SPARSE_MASK_HEAD.CONV_LAYERS = (256, 256, 256, 256)
+_C.MODEL.SPARSE_MASK_HEAD.RESOLUTION = 14
+
 
 # ---------------------------------------------------------------------------- #
 # Solver
@@ -451,7 +493,7 @@ _C.TEST.BBOX_AUG.MAX_SIZE = 4000
 _C.TEST.BBOX_AUG.SCALE_H_FLIP = False
 
 
-# ---------------------------------------------------------------------------- #
+_C.TEST.DETECTIONS_PER_IMG =100
 # Misc options
 # ---------------------------------------------------------------------------- #
 _C.OUTPUT_DIR = "."

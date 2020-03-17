@@ -33,7 +33,6 @@ class _SigmoidFocalLoss(Function):
         )
         return d_logits, None, None, None, None
 
-
 sigmoid_focal_loss_cuda = _SigmoidFocalLoss.apply
 
 
@@ -53,6 +52,7 @@ def sigmoid_focal_loss_cpu(logits, targets, gamma, alpha):
 class SigmoidFocalLoss(nn.Module):
     def __init__(self, gamma, alpha):
         super(SigmoidFocalLoss, self).__init__()
+        self.num_classes = num_classes
         self.gamma = gamma
         self.alpha = alpha
 
